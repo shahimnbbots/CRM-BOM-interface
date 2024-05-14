@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title>Result</title>
+    <style>
+        /* Set the body to full width */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 50%; /* Set table width to 50% of the screen */
+            margin: auto; /* Center align the table */
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: lightgreen; /* Add light green background color */
+        }
+
+        h1 {
+            text-align: center; /* Center align the heading */
+        }
+
+        .create-button-container {
+            display: flex;
+            justify-content: flex-end; /* Align button to the right */
+            margin-top: 30px; /* Add margin to create space */
+            margin-right: 200px; /* Add margin to create space */
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>BOM CREATION</h1>
+    <h2 class="create-button-container"> <!-- Container for the CREATE button -->
+    <button onclick="triggerBot()">CREATE</button>
+    </h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Item No.</th>
+            <th>Group</th>
+            <th>Product Group</th>
+            <th>Item Group</th>
+            <th>Description</th>
+            <th>Operation</th>
+            <th>Fabric Type</th>
+            <th>Structure</th>
+            <th>Quality</th>
+            <th>Finish</th>
+            <th>Material Code</th>
+            <th>Unit of Measure</th>
+            <th>Alternate Unit of Measure</th>
+            <th>Currency</th>
+            <th>Budget Price</th>
+            <th>Consumption</th>
+            <th>Waste</th>
+            <th>Factor</th>
+            <th>Development Responsible</th>
+            <th>Placement</th>
+            <th>Status</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.item_no }}</td>
+            <td>{{ row.group }}</td>
+            <td>{{ row.product_group }}</td>
+            <td>{{ row.item_group }}</td>
+            <td>{{ row.description }}</td>
+            <td>{{ row.operation }}</td>
+            <td>{{ row.fabric_type }}</td>
+            <td>{{ row.structure }}</td>
+            <td>{{ row.quality }}</td>
+            <td>{{ row.finish }}</td>
+            <td>{{ row.material_code }}</td>
+            <td>{{ row.unit_of_measure }}</td>
+            <td>{{ row.alternate_unit_of_measure }}</td>
+            <td>{{ row.budget_price }}</td>
+            <td>{{ row.consumption }}</td>
+            <td>{{ row.waste }}</td>
+            <td>{{ row.factor }}</td>
+            <td>{{ row.development_responsible }}</td>
+            <td>{{ row.currency }}</td>
+            <td>{{ row.placement }}</td>
+            <td>{{ row.status }}</td> <!-- Display the status field -->
+        </tr>
+        {% endfor %}
+    </table>
+    <script>
+    document.body.style.zoom = "50%";
+    // Reload the page every 10 seconds
+    setInterval(function(){
+        location.reload();
+    }, 10000);
+
+    // Function to handle the button click event
+    function triggerBot() {
+    fetch('/run_bot', {
+        method: 'POST'
+    })
+    .then(response => {
+        if (response.ok) {
+            // Show an alert message for success
+            alert('BOM Created!');
+            // Redirect to the result page after triggering the bot
+            window.location.href = '/result';
+        } else {
+            // Show an alert message for failure
+            alert('Failed to trigger the bot.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Show an alert message for errors
+        alert('Error occurred: ' + error);
+    });
+}
+</script>
+</body>
+</html>
